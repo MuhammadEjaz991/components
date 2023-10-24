@@ -1,0 +1,127 @@
+{
+    "partner_token": "8aFbT3YcH1iN6jOvR9lM2qXzD7tS5gEwP.0bU4vN8dJ1mC4kI7aG6vK9rB2tL3dZ6mX9wI2vH5qY0fR3tE4iU1lN7-pX1mZ6wE9xP2rN8dJ1mC4kI7aG6vK9rB2tL3dZ6mX9wI2vH5qY0fR3tE4iU",
+    "user_ref": "kwcp-0000001",
+    "module": "feed_images",
+    "property_ref": "58212w83-22mb-41p9-b063-50914a6e2b",
+    "images": [
+        {
+            "imageRef": "296387596",
+            "imageURL": "https://remax.azureedge.net/userimages/92/Large/L_c186ce14-c10c-4456-be6b-4aff65684656.jpg"
+        }
+    ]
+}
+
+
+
+
+https://ilist-dev.proptexx.ai/
+main is par click karta hn to or ssl enable ho to wo mjhe 
+https://iconnect.stage.gryphtech.com/SignIn.aspx?ReturnUrl=%2f is url par redirect karwa deta hai
+or  User Logs in Iconnect phr  User goes to iList10 and User selects the property 
+phr In Media Tab User clicks 
+on Try the Media Toolkit
+then User is redirected to iList Photo Enhance along with the images of selected property
+iList send a post request to iList Media Toolkit with following required parameters.
+ROUTE: https://ilist-dev.proptexx.ai/partner/receiver
+PARAMETERS: "partner_token" "user_ref"  "module"   "property_ref" "images"   then click on iList Photo Enhance
+User Click on Process after selecting the enhancement types against each image.
+
+For each image is sent to AWS services after base64 encoding.
+
+These are some AWS services that are used to enhance the images.
+feature_enhance => https://sgolnzrcrpk47ovf7vzpzornry0puoaq.lambda-url.ap-southeast-1.on.aws/
+feature_sky_replacement => https://bgjqrm4aqdown2tkk66wf32uyu0clcxu.lambda-url.ap-southeast-1.on.aws/
+feature_grass_repair => https://sixx6uexckxx6yu3ma7v6j4hhq0euoyl.lambda-url.ap-southeast-1.on.aws/
+then Enhanced images are listed
+User can download the
+enhanced images or Send Image to iList
+When User clisk on send Image to iList, image is sent to iList
+This is done in two steps.
+
+Step 1: iListMediaToolkit gets a OAuth token from iList using client_id and client_secret
+Step 2: iListMediaToolkit uses this OAuth token to send images to iList
+OAuth Token is sent in Authorization Header as Bearer
+token . In body we send array of objects each object having listingId, listingPictureId and imageUrl.
+Here is the list of parameters with value description
+listingId                   => "this is the property_ref sent to iListMediaToolKit in request when redirected from iList to iListMediaToolkit"
+listingId   => "this is the imageRef of the image that is going to be sent back"
+imageUrl                => "Url of enhanced image"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Contents
+General Considerations for Proptexx Partner Integration
+API Base URL:
+All partner integration requests should use the base URL: https://kwcp-dev.proptexx.ai/partner/.
+Available Endpoints:
+Signup: For partner registration or signing up for integration, use the endpoint: https://kwcp-dev.proptexx.ai/partner/signup
+Receiver: To send or receive specific data to or from the platform, access: https://kwcp-dev.proptexx.ai/partner/receiver
+Single Sign-On (SSO): For a seamless login experience into the Proptexx platform, utilize: https://kwcp-dev.proptexx.ai/partner/sso
+Secure Access:
+Ensure all API requests are made over HTTPS for data security.
+Authentication:
+Proper authentication is crucial before making any API requests. Ensure you have the required authentication tokens or keys before accessing any of the above endpoints.
+Endpoint Usage:
+Always use the correct endpoint for the specific action you wish to perform. For example, use the Signup endpoint strictly for registration purposes, and the SSO endpoint for logins.
+Data Formats:
+Requests and responses for these endpoints are typically in JSON format. Ensure the Content-Type header is always set to application/json.
+Error Handling:
+It's essential to handle error responses adequately. Check response codes and messages to troubleshoot any issues that might arise.
+
+
+Thank you for providing a detailed overview of your API flow. I'll summarize the provided information in a structured manner, which can serve as a foundational document or an integration guide for your partners or developers:
+
+iList Media Toolkit Integration Guide
+1. Initial Redirect and Login:
+When a user accesses iList and has SSL enabled, they are redirected to iConnect for authentication. Once logged in to iConnect, they can proceed to iList10 and select a property.
+2. Accessing the Media Toolkit:
+Inside the chosen property:
+Navigate to the Media Tab.
+Click on "Try the Media Toolkit".
+User will be redirected to iList Photo Enhance, carrying along the images of the selected property.
+3. iList's POST Request to Media Toolkit:
+iList sends a POST request to the iList Media Toolkit Receiver with the following parameters:
+partner_token
+user_ref
+module
+property_ref
+images
+Once done, users can proceed to click on "iList Photo Enhance".
+4. Image Processing:
+After selecting the desired enhancement types for each image, the user can click on "Process". The images are then base64 encoded and sent to specific AWS Lambda services for enhancement:
+Feature Enhance: AWS Lambda URL
+Sky Replacement: AWS Lambda URL
+Grass Repair: AWS Lambda URL
+Once processed, the enhanced images are listed, and the user can either download them or send them back to iList.
+5. Sending Enhanced Images to iList:
+This process occurs in two steps:
+Step 1: iListMediaToolkit retrieves an OAuth token from iList using the client_id and client_secret.
+Step 2: iListMediaToolkit uses this OAuth token to send the enhanced images back to iList. The OAuth token is sent in the Authorization Header as a Bearer token.
+The body of the request contains an array of objects. Each object contains:
+listingId: This is the property_ref initially sent to iListMediaToolkit.
+listingPictureId: This refers to the imageRef of the image being sent back.
+imageUrl: This is the URL of the enhanced image.
+
+This guide provides a structured overview of the process from initial access to sending back enhanced images. Depending on your audience, you might need to expand on some sections or provide specific code samples and more detailed explanations. If you need further assistance or any specific sections elaborated, let me know!
+
+
